@@ -1,0 +1,2 @@
+# DjangoRecipeApi
+Projekt na www
