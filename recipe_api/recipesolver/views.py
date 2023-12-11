@@ -21,8 +21,7 @@ class UserRegistrationAPIView(APIView):
 class IngredientListView(generics.ListAPIView):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+   
 
 
 class IngredientCreateView(generics.CreateAPIView):
@@ -85,14 +84,12 @@ class RecipeDeleteView(generics.DestroyAPIView):
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticated]
+
 
 class CategoryDetailView(generics.RetrieveAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticated]
+   
 
 class CategoryCreateView(generics.CreateAPIView):
     queryset = Category.objects.all()

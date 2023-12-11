@@ -25,7 +25,7 @@ class Category(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return f"{self.name} - {self.description[:50]}"  # Display part of the description
+        return f"{self.name} - {self.description[:50]}"  
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -34,7 +34,7 @@ class Review(models.Model):
     review_text = models.TextField()
 
     def __str__(self):
-        return f"Review by {self.user.username} for {self.recipe.title} - Rating: {self.rating}"
+        return f"Recenzja {self.user.username} dla {self.recipe.title} - Ocena: {self.rating}"
 
 class DifficultyLevel(models.Model):
     LEVEL_CHOICES = [
@@ -45,4 +45,4 @@ class DifficultyLevel(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
 
     def __str__(self):
-        return f"Level: {self.get_level_display()}"  # Display the verbose level name
+        return f"Poziom trudności {self.get_level_display()}"  

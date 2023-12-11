@@ -28,9 +28,9 @@ class DifficultyLevelSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    ingredients = IngredientSerializer(many=True, read_only=True)
-    category = CategorySerializer()
-    difficulty_level = DifficultyLevelSerializer()
+    ingredients = serializers.PrimaryKeyRelatedField(many=True, queryset=Ingredient.objects.all())
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+    difficulty_level = serializers.PrimaryKeyRelatedField(queryset=DifficultyLevel.objects.all())
     reviews = ReviewSerializer(many=True, read_only=True)
 
     class Meta:
@@ -48,3 +48,4 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+ 
