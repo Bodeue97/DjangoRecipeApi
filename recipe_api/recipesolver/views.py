@@ -21,11 +21,9 @@ class UserRegistrationAPIView(APIView):
 class IngredientListView(generics.ListAPIView):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-   
 
 
 class IngredientCreateView(generics.CreateAPIView):
-    queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -56,7 +54,6 @@ class RecipeListView(generics.ListAPIView):
 
 
 class RecipeCreateView(generics.CreateAPIView):
-    queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -89,19 +86,20 @@ class CategoryListView(generics.ListAPIView):
 class CategoryDetailView(generics.RetrieveAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-   
+
 
 class CategoryCreateView(generics.CreateAPIView):
-    queryset = Category.objects.all()
     serializer_class = CategorySerializer
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated, CanEditCategory]
+
 
 class CategoryUpdateView(generics.UpdateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated, CanEditCategory]
+
 
 class CategoryDeleteView(generics.DestroyAPIView):
     queryset = Category.objects.all()
@@ -116,7 +114,6 @@ class ReviewListView(generics.ListAPIView):
 
 
 class ReviewCreateView(generics.CreateAPIView):
-    queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -140,20 +137,20 @@ class ReviewDeleteView(generics.DestroyAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+
 class RecipeByIngredientView(generics.ListAPIView):
     serializer_class = RecipeSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        ingredient_id = self.kwargs.get('ingredient_id') 
         try:
-            ingredient = Ingredient.objects.get(id=ingredient_id)
-         
+            ingredient = Ingredient.objects.get(id=self.kwargs.get("ingredient_id"))
+
             queryset = Recipe.objects.filter(ingredients=ingredient)
             return queryset
         except Ingredient.DoesNotExist:
-            return Recipe.objects.none() 
+            return Recipe.objects.none()
 
 
 class IngredientsByRecipeView(generics.ListAPIView):
@@ -162,12 +159,10 @@ class IngredientsByRecipeView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        recipe_id = self.kwargs.get('recipe_id')  
         try:
-            recipe = Recipe.objects.get(id=recipe_id)
-           
+            recipe = Recipe.objects.get(id=self.kwargs.get("recipe_id"))
+
             queryset = recipe.ingredients.all()
             return queryset
         except Recipe.DoesNotExist:
-            return Ingredient.objects.none()  
-
+            return Ingredient.objects.none()
